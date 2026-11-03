@@ -13,4 +13,4 @@
 ```bash
    docker compose up -d --build
 ```
-4. Im Browser öffnen: http://localhost:8080
+4. Im Browser öffnen: http://localhost:8081
