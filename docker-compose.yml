@@ -1,6 +1,6 @@
 services:
   php:
-    image: mgin-04-php
+    image: mgin-05-arztpraxis
     build:
       context: .
     ports:
