@@ -47,21 +47,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($fehler))
+        if (empty($fehler))
     {
-        $stmt = $pdo->prepare('INSERT INTO termin (datum, uhrzeit, grund, patient_id, arzt_id) VALUES (:datum, :uhrzeit, :grund, :patient_id, :arzt_id)'
-        );
+        try
+        {
+            $stmt = $pdo->prepare('INSERT INTO termin (datum, uhrzeit, grund, patient_id, arzt_id) VALUES (:datum, :uhrzeit, :grund, :patient_id, :arzt_id)');
 
-        $stmt->execute([
-            'datum' => $datum,
-            'uhrzeit' => $uhrzeit,
-            'grund' => $grund,
-            'patient_id' => $patient_id,
-            'arzt_id' => $arzt_id,
-        ]);
+            $stmt->execute([
+                'datum' => $datum,
+                'uhrzeit' => $uhrzeit,
+                'grund' => $grund,
+                'patient_id' => $patient_id,
+                'arzt_id' => $arzt_id,
+            ]);
 
-        header('Location: index.php');
-        exit;
+            header('Location: index.php');
+            exit;
+        }
+        catch (PDOException $e)
+        {
+            // F4: 1062 = doppelter Eintrag, die Datenbank lehnt den Termin wegen UNIQUE (arzt_id, datum, uhrzeit) ab
+            if ($e->errorInfo[1] == 1062)
+            {
+                $fehler[] = 'Dieser Arzt hat zu dieser Zeit schon einen Termin.';
+            }
+            else
+            {
+                throw $e;
+            }
+        }
     }
 }
 ?>
