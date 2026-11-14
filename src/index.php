@@ -9,6 +9,7 @@
     <ul>
         <li><a href="patienten/">Patient:innen</a></li>
         <li><a href="aerzte/">Ärzt:innen</a></li>
+        <li><a href="termine/">Termine</a></li>
     </ul>
 </body>
 </html>
