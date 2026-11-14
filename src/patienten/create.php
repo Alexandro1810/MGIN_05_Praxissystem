@@ -39,6 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     {
         $fehler[] = 'Geburtsdatum darf nicht leer sein.';
     }
+
+    // F5: Geburtsdatum darf nicht in der Zukunft liegen
+    if ($geburtsdatum > date('Y-m-d'))
+    {
+        $fehler[] = 'Geburtsdatum darf nicht in der Zukunft liegen.';
+    }
  
     if (empty($fehler))
     {
