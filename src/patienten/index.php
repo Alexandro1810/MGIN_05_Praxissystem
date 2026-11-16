@@ -1,7 +1,18 @@
 <?php
 require '../db.php';
 
-$stmt = $pdo->query('SELECT * FROM patient ORDER BY nachname');
+// F6: Suchbegriff aus der Adresszeile holen (GET)
+$suche = trim($_GET['suche'] ?? '');
+if ($suche === '')
+{
+    $stmt = $pdo->query('SELECT * FROM patient ORDER BY nachname');
+}
+
+else
+{
+    $stmt = $pdo->prepare('SELECT * FROM patient WHERE vorname LIKE :s1 OR nachname LIKE :s2 OR sv_nummer LIKE :s3 ORDER BY nachname');
+    $stmt->execute(['s1' => "%$suche%", 's2' => "%$suche%", 's3' => "%$suche%"]);
+}
 $patienten = $stmt->fetchAll();
 ?>
 
