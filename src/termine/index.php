@@ -19,8 +19,7 @@ $termine = $stmt->fetchAll();
 <head><meta charset="UTF-8"><title>Terminliste</title></head>
 <body>
     <h1>Terminliste</h1>
-    <p><a href="../">Startseite</a> | <a href="create.php">+ Neuer Termin</a></p>
-
+        <p><a href="../">Startseite</a> | <a href="create.php">+ Neuer Termin</a> | <a href="tagesansicht.php">Tagesansicht</a></p>
     <table border="1" cellpadding="6">
     <tr>
         <th>Datum</th>
