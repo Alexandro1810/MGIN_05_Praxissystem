@@ -22,6 +22,11 @@ $patienten = $stmt->fetchAll();
 <body>
     <h1>Patientenliste</h1>
     <p><a href="../">Startseite</a> | <a href="create.php">+ Neuer Patient</a></p>
+        <form method="get">
+            <input type="text" name="suche" placeholder="Name oder SV-Nummer" value="<?= htmlspecialchars($suche) ?>">
+            <button type="submit">Suchen</button>
+            <a href="index.php">Alle anzeigen</a>
+        </form>
 
     <table border="1" cellpadding="6">
     <tr>
