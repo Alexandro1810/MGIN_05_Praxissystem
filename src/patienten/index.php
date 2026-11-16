@@ -28,6 +28,10 @@ $patienten = $stmt->fetchAll();
             <a href="index.php">Alle anzeigen</a>
         </form>
 
+        <?php if (empty($patienten)): ?>
+            <p>Keine Patient:innen gefunden.</p>
+        <?php endif; ?>
+
     <table border="1" cellpadding="6">
     <tr>
         <th>ID</th>
