@@ -3,7 +3,7 @@ require '../db.php';
 
 // JOIN: zu jedem Termin die Daten von Patient:in und Arzt dazuholen
 $stmt = $pdo->query(
-    'SELECT termin.datum, termin.uhrzeit, termin.grund,
+    'SELECT termin.termin_id, termin.datum, termin.uhrzeit, termin.grund,
             patient.vorname AS patient_vorname, patient.nachname AS patient_nachname,
             arzt.titel, arzt.vorname AS arzt_vorname, arzt.nachname AS arzt_nachname
      FROM termin
@@ -19,7 +19,8 @@ $termine = $stmt->fetchAll();
 <head><meta charset="UTF-8"><title>Terminliste</title></head>
 <body>
     <h1>Terminliste</h1>
-        <p><a href="../">Startseite</a> | <a href="create.php">+ Neuer Termin</a> | <a href="tagesansicht.php">Tagesansicht</a></p>
+    <p><a href="../">Startseite</a> | <a href="create.php">+ Neuer Termin</a> | <a href="tagesansicht.php">Tagesansicht</a></p>
+
     <table border="1" cellpadding="6">
     <tr>
         <th>Datum</th>
@@ -27,6 +28,7 @@ $termine = $stmt->fetchAll();
         <th>Patient:in</th>
         <th>Arzt</th>
         <th>Grund</th>
+        <th>Aktionen</th>
     </tr>
 
     <?php foreach ($termine as $t): ?>
@@ -36,6 +38,14 @@ $termine = $stmt->fetchAll();
         <td><?= htmlspecialchars($t['patient_vorname'] . ' ' . $t['patient_nachname']) ?></td>
         <td><?= htmlspecialchars($t['titel'] . ' ' . $t['arzt_vorname'] . ' ' . $t['arzt_nachname']) ?></td>
         <td><?= htmlspecialchars($t['grund'] ?? '') ?></td>
+
+        <td>
+            <a href="edit.php?id=<?= $t['termin_id'] ?>">Bearbeiten</a>
+            <form method="post" action="delete.php" onsubmit="return confirm('Wirklich löschen?')">
+                <input type="hidden" name="id" value="<?= $t['termin_id'] ?>">
+                <button type="submit">Löschen</button>
+            </form>
+        </td>
     </tr>
     <?php endforeach; ?>
     </table>
